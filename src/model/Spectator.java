@@ -88,12 +88,10 @@ public class Spectator implements Comparable<Spectator>{
 		this.birthday = birthday;
 	}
 	public Spectator searchSpectator(int ID) {
-		if( id==ID )
-        {
+		if( id==ID ){
             return this;
         }
-        else
-        {
+        else{
         	Spectator temp1 = left.searchSpectator(ID);
         	Spectator temp2 = right.searchSpectator(ID);
         	if(temp1!=null)

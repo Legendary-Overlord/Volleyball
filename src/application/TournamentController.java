@@ -157,7 +157,6 @@ public class TournamentController {
 			}
     		partTime.setText("Time "+Long.toString(time));
     		procPart.setText("Complete");
-    		
     	}
     	
     	

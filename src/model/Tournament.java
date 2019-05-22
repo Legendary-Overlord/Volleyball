@@ -40,17 +40,14 @@ public class Tournament {
 		try {
 			BufferedReader read = new BufferedReader(new FileReader(data));	
 			String dat="";
-			int count=0;
 			int specCount=0;
 			while((dat=read.readLine())!=null) {
 				String info[] = dat.split(",");
 				if(!info[0].equals("id")) {
 					//System.out.println(Integer.parseInt(info[0].replace("-", ""))+info[1]+info[2]+info[3]+info[4]+info[5]+info[6]+info[7]);
 					Spectator spec = new Spectator(Integer.parseInt(info[0].replace("-", "")),info[1],info[2],info[3],info[4],info[5],info[6],info[7]);
-					addSpectator(spec,rootSpec);
-					specCount++;
+					addSpectator(spec,rootSpec);					
 				}
-				count++;
 			}
 			read.close();
 			System.out.println("Spec: "+specCount);

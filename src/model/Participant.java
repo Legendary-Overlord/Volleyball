@@ -110,7 +110,18 @@ public class Participant implements Comparable<Participant>{
 		this.birthday = birthday;
 	}
 	public Participant searchParticipant(int ID) {
-		return null;
+		if(ID==id)
+			return this;
+		else {
+			while(next!=null) {
+				if(next.getId()==ID)
+					return next;
+				else
+					next.searchParticipant(ID);
+			}
+			return null;
+				
+		}
 	}
 
 	@Override
