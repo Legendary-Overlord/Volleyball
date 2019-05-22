@@ -3,20 +3,15 @@ package application;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.net.URL;
-
-import javax.imageio.ImageIO;
-
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.canvas.Canvas;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
-import javafx.scene.control.TreeView;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.stage.FileChooser;
 import javafx.stage.FileChooser.ExtensionFilter;
-import javafx.util.StringConverter;
 import model.Participant;
 import model.Spectator;
 import model.Tournament;
@@ -28,10 +23,12 @@ public class TournamentController {
 	File data;
 	
 	public void initialize() {
+		tourn = new Tournament();
 		explorer = new FileChooser();
 		explorer.setTitle("Open CSV file");
 		explorer.getExtensionFilters().add(new ExtensionFilter("CSV","*.csv") );
-		explorer.setInitialDirectory(new File("./"));
+		explorer.setInitialDirectory(new File("./res"));
+		data=new File("./");
 	}
 
     @FXML
@@ -81,30 +78,39 @@ public class TournamentController {
 
     @FXML
     private ImageView avatar;
-
+    
     @FXML
-    private TreeView<?> treeViewTab;
+    private Canvas canvas;
+
 
     @FXML
     void exploreFile(ActionEvent event) {
     	data = explorer.showOpenDialog(null);
+    	exploreText.setText(data.toString());
     }
 
     @FXML
     void loadFile(ActionEvent event) {
     	//fill participants and spectators
+    		tourn.load(data);
     }
 
     @FXML
     void searchParticipant(ActionEvent event) {
     	int partID = Integer.parseInt(participantText.getText());
-    	tourn.searchParticipant(partID);
-
+    	long s1 = System.nanoTime();
+    	Participant part=tourn.searchParticipant(partID);
+    	long time = System.nanoTime()-s1;
+    	loadSearch(part,null,time);
     }
 
     @FXML
     void searchSpectator(ActionEvent event) {
-
+    	int partID = Integer.parseInt(spectatorText.getText());
+    	long s1 = System.nanoTime();
+    	Spectator spec =tourn.searchSpectator(partID);
+    	long time = System.nanoTime()-s1;
+    	loadSearch(null,spec,time);
     }
 
     @FXML
@@ -116,7 +122,8 @@ public class TournamentController {
     void selectSpectator(ActionEvent event) {
 
     }
-    public void loadSearch(Participant a,Spectator b) {
+    
+    private void loadSearch(Participant a,Spectator b, long time) {
     	if(a!=null) {
     		dataID.setText(Integer.toString(a.getId()));
     		dataFName.setText(a.getFname());
@@ -128,9 +135,10 @@ public class TournamentController {
     		try {
 				avatar.setImage(new Image(new FileInputStream(a.getAvatar())));
 			} catch (FileNotFoundException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
+    		specTime.setText("Time "+Long.toString(time));
+    		procSpec.setText("Complete");
     		
     	}
     	if(b!=null) {
@@ -144,9 +152,11 @@ public class TournamentController {
     		try {
 				avatar.setImage(new Image(new FileInputStream(b.getAvatar())));
 			} catch (FileNotFoundException e) {
-				// TODO Auto-generated catch block
+				// 
 				e.printStackTrace();
 			}
+    		partTime.setText("Time "+Long.toString(time));
+    		procPart.setText("Complete");
     		
     	}
     	

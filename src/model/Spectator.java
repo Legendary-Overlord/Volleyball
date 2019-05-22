@@ -14,10 +14,10 @@ public class Spectator implements Comparable<Spectator>{
 	String country;
 	String avatar;
 	String birthday;
-	public Spectator(Spectator prev, Spectator next, int id, String fname, String lname, String email, String gender,
+	public Spectator(int id, String fname, String lname, String email, String gender,
 			String country, String avatar, String birthday) {
-		this.left = prev;
-		this.right = next;
+		left = null;
+		right = null;
 		this.id = id;
 		this.fname = fname;
 		this.lname = lname;
@@ -27,16 +27,16 @@ public class Spectator implements Comparable<Spectator>{
 		this.avatar = avatar;
 		this.birthday = birthday;
 	}
-	public Spectator getPrev() {
+	public Spectator getLeft() {
 		return left;
 	}
-	public void setPrev(Spectator prev) {
+	public void setLeft(Spectator prev) {
 		this.left = prev;
 	}
-	public Spectator getNext() {
+	public Spectator getRight() {
 		return right;
 	}
-	public void setNext(Spectator next) {
+	public void setRight(Spectator next) {
 		this.right = next;
 	}
 	public int getId() {

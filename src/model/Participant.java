@@ -30,19 +30,19 @@ public class Participant implements Comparable<Participant>{
 		this.birthday = birthday;
 	}
 
-	public Participant getLeft() {
+	public Participant getPrev() {
 		return prev;
 	}
 
-	public void setLeft(Participant left) {
+	public void setPrev(Participant left) {
 		this.prev = left;
 	}
 
-	public Participant getRight() {
+	public Participant getNext() {
 		return next;
 	}
 
-	public void setRight(Participant right) {
+	public void setNext(Participant right) {
 		this.next = right;
 	}
 
